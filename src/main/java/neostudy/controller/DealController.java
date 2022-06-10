@@ -5,7 +5,6 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import neostudy.dto.*;
-import neostudy.entity.*;
 import neostudy.exception.NoElementException;
 import neostudy.exception.ScoringException;
 import neostudy.service.ApplicationService;
