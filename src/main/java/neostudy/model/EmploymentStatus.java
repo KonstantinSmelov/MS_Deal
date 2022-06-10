@@ -1,4 +1,4 @@
-package neostudy;
+package neostudy.model;
 
 public enum EmploymentStatus {
     UNEMPLOYED,

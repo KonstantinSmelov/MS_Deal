@@ -1,8 +1,7 @@
 package neostudy.entity;
 
 import lombok.*;
-import neostudy.Status;
-import neostudy.dto.ApplicationStatusHistoryDTO;
+import neostudy.model.Status;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -49,13 +48,13 @@ public class Application {
 
     @ToString.Exclude
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "application")
-    private List<ApplicationStatusHistory> applicationStatusHistoriesList;
+    private List<ApplicationStatusHistory> applicationStatusHistoryList;
 
     public void addStatusHistoryToApp(ApplicationStatusHistory applicationStatusHistory) {
-        if(applicationStatusHistoriesList == null) {
-            applicationStatusHistoriesList = new ArrayList<>();
+        if(applicationStatusHistoryList == null) {
+            applicationStatusHistoryList = new ArrayList<>();
         }
-        applicationStatusHistoriesList.add(applicationStatusHistory);
+        applicationStatusHistoryList.add(applicationStatusHistory);
         applicationStatusHistory.setApplication(this);
     }
 }

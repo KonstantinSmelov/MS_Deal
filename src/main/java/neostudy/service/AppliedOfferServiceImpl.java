@@ -1,33 +1,28 @@
 package neostudy.service;
 
+import lombok.RequiredArgsConstructor;
 import neostudy.dao.AppliedOfferRepository;
 import neostudy.entity.Application;
 import neostudy.entity.AppliedOffer;
+import neostudy.exception.NoElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class AppliedOfferServiceImpl implements AppliedOfferService {
 
     private final AppliedOfferRepository appliedOfferRepository;
 
-    public AppliedOfferServiceImpl(AppliedOfferRepository appliedOfferRepository) {
-        this.appliedOfferRepository = appliedOfferRepository;
-    }
-
     @Override
-    public AppliedOffer getAppliedOffer(Long id) {
+    public AppliedOffer getAppliedOffer(Long id) throws NoElementException {
 
-        AppliedOffer appliedOffer = null;
+        return appliedOfferRepository.findById(id).orElseThrow(() -> new NoElementException("Принятого предложения с таким номером в БД нет"));
 
-        Optional<AppliedOffer> optionalAppliedOffer = appliedOfferRepository.findById(id);
-        if(optionalAppliedOffer.isPresent()) {
-            appliedOffer = optionalAppliedOffer.get();
-        }
-
-        return appliedOffer;
     }
 
     @Override

@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import neostudy.ChangeType;
-import neostudy.Status;
+import neostudy.model.ChangeType;
+import neostudy.model.Status;
 
 import javax.persistence.*;
 import java.time.LocalDate;

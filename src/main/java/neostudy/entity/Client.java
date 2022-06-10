@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import neostudy.Gender;
-import neostudy.MaritalStatus;
+import neostudy.model.Gender;
+import neostudy.model.MaritalStatus;
 
 import javax.persistence.*;
 import java.time.LocalDate;

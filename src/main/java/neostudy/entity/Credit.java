@@ -1,7 +1,7 @@
 package neostudy.entity;
 
 import lombok.*;
-import neostudy.CreditStatus;
+import neostudy.model.CreditStatus;
 
 import javax.persistence.*;
 import java.math.BigDecimal;

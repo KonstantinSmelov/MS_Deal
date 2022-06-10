@@ -2,8 +2,8 @@ package neostudy.dto;
 
 import lombok.Builder;
 import lombok.Data;
-import neostudy.ChangeType;
-import neostudy.Status;
+import neostudy.model.ChangeType;
+import neostudy.model.Status;
 
 import java.time.LocalDate;
 

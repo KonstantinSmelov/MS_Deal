@@ -1,7 +1,7 @@
-package neostudy;
+package neostudy.model;
 
 public enum Gender {
     MALE,
     FEMALE,
-    X
+    NON_BINARY
 }

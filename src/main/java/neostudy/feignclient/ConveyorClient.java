@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-@FeignClient(name="conveyor-service-client", url = "http://localhost:8080")
+@FeignClient(name="conveyor-service-client", url = "${URL.toConveyor}")
 public interface ConveyorClient {
 
     @PostMapping("/conveyor/offers")

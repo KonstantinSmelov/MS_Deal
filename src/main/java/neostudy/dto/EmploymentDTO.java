@@ -2,8 +2,8 @@ package neostudy.dto;
 
 import lombok.Builder;
 import lombok.Data;
-import neostudy.EmploymentStatus;
-import neostudy.Position;
+import neostudy.model.EmploymentStatus;
+import neostudy.model.Position;
 
 import java.math.BigDecimal;
 

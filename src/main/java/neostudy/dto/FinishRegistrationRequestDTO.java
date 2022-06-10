@@ -2,8 +2,8 @@ package neostudy.dto;
 
 import lombok.Builder;
 import lombok.Data;
-import neostudy.Gender;
-import neostudy.MaritalStatus;
+import neostudy.model.Gender;
+import neostudy.model.MaritalStatus;
 
 import java.time.LocalDate;
 
