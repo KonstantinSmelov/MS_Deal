@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - preConditions:
+      - dbms:
+          type: postgresql
+  - changeSet:
+      id: create-payment_schedule
+      author: KMS
+  - include:
+      file: create-payment_schedule-table.sql
+      relativeToChangelogFile: true

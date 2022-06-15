@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - preConditions:
+      - dbms:
+          type: postgresql
+  - changeSet:
+      id: create-credits
+      author: KMS
+  - include:
+      file: create-credits-table.sql
+      relativeToChangelogFile: true

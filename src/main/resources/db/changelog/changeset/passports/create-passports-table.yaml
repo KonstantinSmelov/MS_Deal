@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - preConditions:
+      - dbms:
+          type: postgresql
+  - changeSet:
+      id: create-passports
+      author: KMS
+  - include:
+      file: create-passports-table.sql
+      relativeToChangelogFile: true
