@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - preConditions:
+      - dbms:
+          type: postgresql
+  - changeSet:
+      id: create-clients
+      author: KMS
+  - include:
+      file: create-clients-table.sql
+      relativeToChangelogFile: true

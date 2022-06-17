@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - preConditions:
+      - dbms:
+          type: postgresql
+  - changeSet:
+      id: create-applied_offer
+      author: KMS
+  - include:
+      file: create-applied_offer-table.sql
+      relativeToChangelogFile: true

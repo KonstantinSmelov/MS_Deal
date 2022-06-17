@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - preConditions:
+      - dbms:
+          type: postgresql
+  - changeSet:
+      id: create-employments
+      author: KMS
+  - include:
+      file: create-employments-table.sql
+      relativeToChangelogFile: true

@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - preConditions:
+      - dbms:
+          type: postgresql
+  - changeSet:
+      id: create-applications
+      author: KMS
+  - include:
+      file: create-applications-table.sql
+      relativeToChangelogFile: true

@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - preConditions:
+      - dbms:
+          type: postgresql
+  - changeSet:
+      id: create-application_status_history
+      author: KMS
+  - include:
+      file: create-application_status_history-table.sql
+      relativeToChangelogFile: true
