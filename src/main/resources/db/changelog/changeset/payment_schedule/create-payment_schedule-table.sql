@@ -1,6 +1,6 @@
 CREATE TABLE payment_schedule
 (
-    id               bigserial NOT NULL primary key,
+    id               bigserial primary key,
     number           integer,
     date             date,
     total_payment    decimal,

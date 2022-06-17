@@ -1,6 +1,6 @@
 CREATE TABLE credits
 (
-    id                   bigserial NOT NULL primary key,
+    id                   bigserial primary key,
     amount               decimal,
     term                 integer,
     monthly_payment      decimal,

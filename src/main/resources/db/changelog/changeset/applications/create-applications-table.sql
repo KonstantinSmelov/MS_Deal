@@ -1,6 +1,6 @@
 CREATE TABLE applications
 (
-    id               bigserial NOT NULL primary key,
+    id               bigserial primary key,
     client_id        bigserial,
     credit_id        bigserial,
     status           varchar,

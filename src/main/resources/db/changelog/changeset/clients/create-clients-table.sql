@@ -1,6 +1,6 @@
 CREATE TABLE clients
 (
-    id               bigserial NOT NULL primary key,
+    id               bigserial primary key,
     first_name       varchar,
     last_name        varchar,
     middle_name      varchar,

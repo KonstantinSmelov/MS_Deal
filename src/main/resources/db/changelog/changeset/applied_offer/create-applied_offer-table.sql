@@ -1,6 +1,6 @@
 CREATE TABLE applied_offer
 (
-    id                   bigserial NOT NULL primary key,
+    id                   bigserial primary key,
     requested_amount     decimal,
     total_amount         decimal,
     term                 integer,

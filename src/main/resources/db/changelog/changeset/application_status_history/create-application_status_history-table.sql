@@ -1,6 +1,6 @@
 CREATE TABLE application_status_history
 (
-    id             bigserial NOT NULL primary key,
+    id             bigserial primary key,
     status         varchar,
     time           date,
     change_type    varchar,
