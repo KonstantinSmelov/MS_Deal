@@ -1,12 +1,15 @@
 package neostudy.exception;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 
 @AllArgsConstructor
-@Getter
-public class NoElementException extends Exception {
+public class SesCodeException extends Exception {
 
     private String message;
+
+    @Setter
+    @Getter
+    private Long id;
 }

@@ -30,6 +30,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     private final CreditService creditService;
     private final ModelMapper modelMapper;
     private final ConveyorClient conveyorClient;
+    private final SesCodeService sesCodeService;
 
     @Override
     public Application getApplication(Long id) throws NoElementException {
@@ -74,7 +75,12 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public void choosingOffer(LoanOfferDTO loanOfferDTO) throws NoElementException {
-        Application application = getApplication(loanOfferDTO.getApplicationId());
+        Application application;
+        try {
+            application = getApplication(loanOfferDTO.getApplicationId());
+        } catch (NoElementException e) {
+            throw new NoElementException("Application с таким номером в БД нет");
+        }
         log.debug("choosingOffer(): достали из БД application: {}", application);
 
         ApplicationStatusHistory applicationStatusHistory = ApplicationStatusHistory.builder()
@@ -96,7 +102,12 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public void choosingApplication(Long applicationId, FinishRegistrationRequestDTO finishRegistrationRequestDTO) throws NoElementException, ScoringException {
-        Application application = getApplication(applicationId);
+        Application application;
+        try {
+            application = getApplication(applicationId);
+        } catch (NoElementException e) {
+            throw new NoElementException("Application с таким номером в БД нет");
+        }
         log.debug("choosingApplication(): взяли Application №{} из БД: {}", applicationId, application);
 
         ScoringDataDTO scoringDataDTO = ScoringDataDTO.builder()
@@ -149,5 +160,27 @@ public class ApplicationServiceImpl implements ApplicationService {
         credit.setCreditStatus(CreditStatus.CALCULATED);
         creditService.saveCredit(credit);
         log.debug("choosingApplication(): дополнили Credit данными и сохранили в БД: {}", credit);
+
+        setSesCode(applicationId);
+    }
+
+    public void setSighDate(Long applicationId) throws NoElementException {
+        Application application = getApplication(applicationId);
+
+        application.setSignDate(LocalDate.now());
+        log.debug("setSighDate(): установили signDate {}", application.getSignDate());
+
+        applicationRepository.save(application);
+        log.debug("setSighDate(): дополнили Application данными и сохранили в БД: {}", application);
+    }
+
+    private void setSesCode(Long applicationId) throws NoElementException {
+        Application application = getApplication(applicationId);
+
+        application.setSesCode(sesCodeService.generateSesCode());
+        log.debug("setSesCode(): установили sesCode {}", application.getSesCode());
+
+        applicationRepository.save(application);
+        log.debug("setSesCode(): дополнили Application данными и сохранили в БД: {}", application);
     }
 }

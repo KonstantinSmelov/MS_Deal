@@ -4,8 +4,6 @@ import neostudy.dto.FinishRegistrationRequestDTO;
 import neostudy.dto.LoanApplicationRequestDTO;
 import neostudy.dto.LoanOfferDTO;
 import neostudy.entity.Application;
-import neostudy.entity.Client;
-import neostudy.entity.Credit;
 import neostudy.exception.NoElementException;
 import neostudy.exception.ScoringException;
 
@@ -15,5 +13,5 @@ public interface ApplicationService {
     void saveApplication(Application application);
     void choosingOffer(LoanOfferDTO loanOfferDTO) throws NoElementException;
     void choosingApplication(Long id, FinishRegistrationRequestDTO finishRegistrationRequestDTO) throws NoElementException, ScoringException;
-
+    void setSighDate(Long id) throws NoElementException;
 }
