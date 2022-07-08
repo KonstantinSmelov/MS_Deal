@@ -23,7 +23,7 @@ public class SummaryAppInfoService {
 
         List<PaymentScheduleElement> paymentScheduleElementList = new ArrayList<>();
 
-        for(int x = 0; x < as.getApplication(id).getCredit().getPaymentScheduleList().size(); x++) {
+        for (int x = 0; x < as.getApplication(id).getCredit().getPaymentScheduleList().size(); x++) {
             paymentScheduleElementList.add(modelMapper.map(as.getApplication(id).getCredit().getPaymentScheduleList().get(x), PaymentScheduleElement.class));
         }
 

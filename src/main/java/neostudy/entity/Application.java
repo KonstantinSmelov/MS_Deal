@@ -51,7 +51,7 @@ public class Application {
     private List<ApplicationStatusHistory> applicationStatusHistoryList;
 
     public void addStatusHistoryToApp(ApplicationStatusHistory applicationStatusHistory) {
-        if(applicationStatusHistoryList == null) {
+        if (applicationStatusHistoryList == null) {
             applicationStatusHistoryList = new ArrayList<>();
         }
         applicationStatusHistoryList.add(applicationStatusHistory);

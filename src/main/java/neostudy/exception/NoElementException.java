@@ -7,6 +7,5 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class NoElementException extends Exception {
-
     private String message;
 }

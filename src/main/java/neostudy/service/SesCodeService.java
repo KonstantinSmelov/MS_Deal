@@ -18,7 +18,7 @@ public class SesCodeService {
     public Integer generateSesCode() {
         StringBuilder stringBuilder = new StringBuilder();
         for (int x = 0; x < 4; x++) {
-            stringBuilder.append((int)(Math.random() * 9) + 1);
+            stringBuilder.append((int) (Math.random() * 9) + 1);
         }
         log.debug("generateSesCode(): сгенерирован SES код {}", stringBuilder);
         return Integer.parseInt(stringBuilder.toString());
@@ -29,9 +29,9 @@ public class SesCodeService {
         log.debug("checkSesCode(): ожидаемый SES код: {}", sesFromDB);
         log.debug("checkSesCode(): введённый SES код: {}", sesFromUser);
 
-        if(!Objects.equals(sesFromDB, sesFromUser)) {
+        if (!Objects.equals(sesFromDB, sesFromUser)) {
             log.debug("checkSesCode(): неверный SES-код");
-            throw new SesCodeException("Неверный SES-код!!", id);
+            throw new SesCodeException("\nНеверный SES-код для заявки №" + id, id);
         }
     }
 }
