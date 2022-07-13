@@ -2,13 +2,10 @@ package neostudy.controller;
 
 import neostudy.dao.ApplicationRepository;
 import neostudy.entity.*;
-import neostudy.model.Status;
-import neostudy.service.ApplicationService;
-import neostudy.service.ClientService;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.modelmapper.ModelMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,11 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
-
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -35,28 +28,23 @@ class ScoringFromConveyorTest {
     @MockBean
     private ApplicationRepository applicationRepository;
 
-    @MockBean
-    private ClientService clientService;
-
-    @Autowired
-    private ApplicationService applicationService;
-
     @Autowired
     private MockMvc mockMvc;
 
+    @Disabled //неактуален в виду перенёса прескоринга в другой микросервис
     @Test
     void getApplicationWrongDtoTest() throws Exception {
 
         String json = "{\n" +
-                "  \"amount\": 0,\n" +  //неверный запрос
+                "  \"amount\": 65000,\n" +
                 "  \"birthdate\": \"2000-06-06\",\n" +
-                "  \"email\": \"strin@gmail.ru\",\n" +
-                "  \"firstName\": \"sdfg\",\n" +
-                "  \"lastName\": \"sdfg\",\n" +
-                "  \"middleName\": \"dfgs\",\n" +
-                "  \"passportNumber\": \"123565\",\n" +
+                "  \"email\": \"mmamont@inbox.ru\",\n" +
+                "  \"firstName\": ,\n" +
+                "  \"lastName\": \"string\",\n" +
+                "  \"middleName\": \"string\",\n" +
+                "  \"passportNumber\": \"123456\",\n" +
                 "  \"passportSeries\": \"1234\",\n" +
-                "  \"term\": 8\n" +
+                "  \"term\": 20\n" +
                 "}";
 
         mockMvc.perform(post("/deal/application")
@@ -86,6 +74,7 @@ class ScoringFromConveyorTest {
                 .andExpect(status().isOk());
     }
 
+    @Disabled
     @Test
     void choosingOfferCorrect() throws Exception {
 

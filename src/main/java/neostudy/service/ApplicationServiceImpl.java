@@ -81,12 +81,13 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public void choosingOffer(LoanOfferDTO loanOfferDTO) throws NoElementException {
-        Application application;
-        try {
-            application = getApplication(loanOfferDTO.getApplicationId());
-        } catch (NoElementException e) {
-            throw new NoElementException("\nApplication с таким номером в БД нет");
-        }
+//        Application application;
+//        try {
+//            application = getApplication(loanOfferDTO.getApplicationId());
+//        } catch (NoElementException e) {
+//            throw new NoElementException("\nApplication с таким номером в БД нет");
+//        }
+        Application application = getApplication(loanOfferDTO.getApplicationId());
         log.debug("choosingOffer(): достали из БД application: {}", application);
 
         AppliedOffer appliedOffer = modelMapper.map(loanOfferDTO, AppliedOffer.class);
@@ -101,12 +102,13 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public void choosingApplication(Long applicationId, FinishRegistrationRequestDTO finishRegistrationRequestDTO) throws NoElementException, ApplicationError {
-        Application application;
-        try {
-            application = getApplication(applicationId);
-        } catch (NoElementException e) {
-            throw new NoElementException("\nApplication с таким номером в БД нет");
-        }
+//        Application application;
+//        try {
+//            application = getApplication(applicationId);
+//        } catch (NoElementException e) {
+//            throw new NoElementException("\nApplication с таким номером в БД нет");
+//        }
+        Application application = getApplication(applicationId);
         log.debug("choosingApplication(): взяли Application №{} из БД: {}", applicationId, application);
 
 
