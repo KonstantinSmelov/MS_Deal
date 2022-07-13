@@ -5,11 +5,12 @@ import lombok.extern.slf4j.Slf4j;
 import neostudy.dao.ApplicationRepository;
 import neostudy.dto.*;
 import neostudy.entity.*;
+import neostudy.exception.ApplicationError;
 import neostudy.exception.NoElementException;
-import neostudy.exception.ScoringException;
 import neostudy.feignclient.ConveyorClient;
 import neostudy.model.ChangeType;
 import neostudy.model.CreditStatus;
+import neostudy.model.StaticID;
 import neostudy.model.Status;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,12 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public Application getApplication(Long id) throws NoElementException {
-        return applicationRepository.findById(id).orElseThrow(() -> new NoElementException("Application с таким номером в БД нет"));
+        return applicationRepository.findById(id).orElseThrow(() -> new NoElementException("\nApplication с таким номером в БД нет"));
+    }
+
+    @Override
+    public List<Application> getAllApplications() {
+        return applicationRepository.findAll();
     }
 
     @Override
@@ -79,36 +85,32 @@ public class ApplicationServiceImpl implements ApplicationService {
         try {
             application = getApplication(loanOfferDTO.getApplicationId());
         } catch (NoElementException e) {
-            throw new NoElementException("Application с таким номером в БД нет");
+            throw new NoElementException("\nApplication с таким номером в БД нет");
         }
         log.debug("choosingOffer(): достали из БД application: {}", application);
 
-        ApplicationStatusHistory applicationStatusHistory = ApplicationStatusHistory.builder()
-                .status(Status.APPROVED)
-                .time(LocalDate.now())
-                .changeType(ChangeType.MANUAL).build();
-        application.addStatusHistoryToApp(applicationStatusHistory);
-        log.debug("choosingOffer(): добавили в Application appStatusHistory: {}", applicationStatusHistory);
-
         AppliedOffer appliedOffer = modelMapper.map(loanOfferDTO, AppliedOffer.class);
         application.setAppliedOffer(appliedOffer);
-        application.setStatus(Status.CC_APPROVED);
         log.debug("choosingOffer(): добавили в Application appliedOffer: {}", appliedOffer);
+
+        setApplicationStatusHistory(application.getId(), Status.APPROVED, LocalDate.now(), ChangeType.MANUAL);
 
         applicationRepository.save(application);
         log.debug("choosingOffer(): сохранили в БД Application: {}", application);
-
     }
 
     @Override
-    public void choosingApplication(Long applicationId, FinishRegistrationRequestDTO finishRegistrationRequestDTO) throws NoElementException, ScoringException {
+    public void choosingApplication(Long applicationId, FinishRegistrationRequestDTO finishRegistrationRequestDTO) throws NoElementException, ApplicationError {
         Application application;
         try {
             application = getApplication(applicationId);
         } catch (NoElementException e) {
-            throw new NoElementException("Application с таким номером в БД нет");
+            throw new NoElementException("\nApplication с таким номером в БД нет");
         }
         log.debug("choosingApplication(): взяли Application №{} из БД: {}", applicationId, application);
+
+
+        isStatusCorrect(applicationId, Status.APPROVED);
 
         ScoringDataDTO scoringDataDTO = ScoringDataDTO.builder()
                 .amount(application.getAppliedOffer().getRequestedAmount())
@@ -130,15 +132,13 @@ public class ApplicationServiceImpl implements ApplicationService {
                 .isSalaryClient(application.getAppliedOffer().getIsSalaryClient()).build();
         log.debug("choosingApplication(): собрали ScoringDataDTO: {}", scoringDataDTO);
 
-        if(scoringDataDTO.getGender() == null) {
-            throw new ScoringException("Скоринг не пройден!");
-        }
-
         Client client = clientService.getClient(application.getId());
         modelMapper.map(finishRegistrationRequestDTO, client);
         log.debug("choosingApplication(): дополнили Client из FinishRegistrationRequestDTO: {}", client);
 
+        StaticID.applicationId = applicationId;
         CreditDTO creditDTO = conveyorClient.getScoringDataFromConveyor(scoringDataDTO);
+
         log.debug("choosingApplication(): собрали CreditDTO из Conveyor на основе собранной ScoringDataDTO: {}", creditDTO);
 
         Credit credit = creditService.getCredit(application.getId());
@@ -162,6 +162,7 @@ public class ApplicationServiceImpl implements ApplicationService {
         log.debug("choosingApplication(): дополнили Credit данными и сохранили в БД: {}", credit);
 
         setSesCode(applicationId);
+        setApplicationStatusHistory(applicationId, Status.CC_APPROVED, LocalDate.now(), ChangeType.AUTOMATIC);
     }
 
     public void setSighDate(Long applicationId) throws NoElementException {
@@ -182,5 +183,31 @@ public class ApplicationServiceImpl implements ApplicationService {
 
         applicationRepository.save(application);
         log.debug("setSesCode(): дополнили Application данными и сохранили в БД: {}", application);
+    }
+
+    public void setApplicationStatusHistory(Long applicationId, Status status, LocalDate time, ChangeType changeType) throws NoElementException {
+        Application application = getApplication(applicationId);
+        application.setStatus(status);
+
+        ApplicationStatusHistory applicationStatusHistory = ApplicationStatusHistory.builder()
+                .status(status)
+                .time(time)
+                .changeType(changeType).build();
+        application.addStatusHistoryToApp(applicationStatusHistory);
+        log.debug("setApplicationStatusHistory(): добавили в Application appStatusHistory: {}", applicationStatusHistory);
+
+        log.debug("setApplicationStatusHistory(): для Application {} установили Status {}", applicationId, status);
+
+        applicationRepository.save(application);
+        log.debug("setApplicationStatusHistory(): сохранили в БД: {}", application);
+    }
+
+    public void isStatusCorrect(Long applicationId, Status correctStatus) throws NoElementException, ApplicationError {
+        Application application = getApplication(applicationId);
+
+        if (application.getStatus() != correctStatus) {
+            throw new ApplicationError(String.format("\nПредложение c №%d не подходит для данного этапа", applicationId));
+        }
+
     }
 }
