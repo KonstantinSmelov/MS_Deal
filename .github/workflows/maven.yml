@@ -15,7 +15,7 @@ jobs:
           java-version: 1.11
 
       - name: Build with Maven
-        run: mvn -B clean package
+        run: mvn -B clean package -DskipTests
 
       - name: Test Coverage
         uses: codecov/codecov-action@v3
