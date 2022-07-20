@@ -53,6 +53,7 @@ class ScoringFromConveyorTest {
                 .andExpect(status().is(451));
     }
 
+    @Disabled
     @Test
     void getApplicationCorrectDtoTest() throws Exception {
 
