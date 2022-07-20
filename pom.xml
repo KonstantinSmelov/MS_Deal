@@ -113,6 +113,12 @@
             <version>${objectmapper.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.8</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -129,10 +135,11 @@
                     </excludes>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.4</version>
+                <version>0.8.8</version>
                 <executions>
                     <execution>
                         <goals>
@@ -161,6 +168,7 @@
                     </includes>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 
