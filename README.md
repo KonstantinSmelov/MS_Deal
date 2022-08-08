@@ -1,7 +1,15 @@
-# MS-Deal
+# Микросервис №2 - Deal
 
-[![Build status](https://github.com/KonstantinSmelov/Deal/actions/workflows/maven.yml/badge.svg)](https://github.com/KonstantinSmelov/Deal/actions/workflows/maven.yml)
-[![codecov](https://codecov.io/gh/KonstantinSmelov/Deal/branch/mvp6/graph/badge.svg)](https://codecov.io/gh/KonstantinSmelov/Deal)
-[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=KonstantinSmelov_Deal&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=KonstantinSmelov_Deal)
-[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=KonstantinSmelov_Deal&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=KonstantinSmelov_Deal)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=KonstantinSmelov_Deal&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=KonstantinSmelov_Deal)
+ ***Функция:*** работа с БД, работа через Kafka с микросервисом Dossier для уведомления клиентов по почте
+
+Входит в состав микросервисного приложения "Кредитный конвеер", состоящего из 5 микросервисов:
+
+* [Микросервис №1 Conveyor (сслыка на репозиторий)](https://github.com/KonstantinSmelov/MS_Conveyor)
+* [Микросервис №3 Application (сслыка на репозиторий)](https://github.com/KonstantinSmelov/MS_Application)
+* [Микросервис №4 Dossier (сслыка на репозиторий)](https://github.com/KonstantinSmelov/MS_Dossier)
+* [Микросервис №5 Gateway (сслыка на репозиторий)](https://github.com/KonstantinSmelov/MS_Gateway)
+
+
+***Общая архитектура:***
+
+![Alt-текст](https://i.postimg.cc/GhvqX3xN/1.png)
